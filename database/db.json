@@ -1,0 +1,37 @@
+{
+  "blacklisted_emails": [
+    {
+      "emailId": "1234@1234.com"
+    },
+    {
+      "emailId": "kendo@kendo.com"
+    },
+    {
+      "email": "kendo@kend.com"
+    },
+    {
+      "emailId": "kendo@kend.com"
+    },
+    {
+      "emailId": "kendo@kend.com"
+    },
+    {
+      "emailId": "kendo@kend.com"
+    },
+    {
+      "emailId": "kendo@kendoo.com"
+    },
+    {
+      "emailId": "ken0.3542919447876849@ken.com"
+    },
+    {
+      "emailId": "ken0.21536404367613815@ken.com"
+    },
+    {
+      "emailId": "ken0.9395297031896879@ken.com"
+    },
+    {
+      "emailId": "ken1573937664944@ken.com"
+    }
+  ]
+}

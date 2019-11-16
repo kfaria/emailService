@@ -1,0 +1,6 @@
+{
+    "service": {
+        "serviceName" : "Amazon SES",
+        "sendEndpoint" : "https://this.is.a.sample.endpoint"
+    }
+}
