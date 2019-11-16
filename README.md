@@ -1,4 +1,8 @@
-STARTING
+Author: Kenneth Faria
+Porject: a simple email server 
+
+Running instructions
+
 -- To run on a specific PORT
     PORT=#### node start
 -- To run tests
@@ -8,9 +12,10 @@ STARTING
 -- To start
     npm run-script start
 
-
+Application instructions
 
 -- send-email sample POSTS
+
     curl --request POST \
   --url localhost:3300/send-email \
   --header 'content-type: application/json' \
@@ -20,21 +25,13 @@ STARTING
     "subject" : "send that email!",
     "body_text" : "Welcome to the internet",
     "body_html" : "<html><div> Wow the email got sent </div></html>"
-}'
+  }'
 
-    curl --request POST \
-  --url localhost:3300/send-email \
-  --header 'content-type: application/json' \
-  --data '{
-    "from" : "ken",
-    "to" : "kendo",
-    "body_text" : "Welcome to the internet",
-    "body_html" : "<html><div> Wow the email got sent </div></html>"
-}'
+-- blacklist emails POST
 
     curl --request POST \
   --url localhost:3300/bounced-email \
   --header 'content-type: application/json' \
   --data '{
     "email_address" : "kendo@kend.com"
-}'
+  }'

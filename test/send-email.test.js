@@ -89,7 +89,7 @@ describe('Blacklist email', () => {
             .send({
                 email_address: lastBlacklisted
             })
-        expect(res.statusCode).toEqual(400)
+        expect(res.statusCode).toEqual(200)
     })
     it('Email address format check', async () => {
         const res = await request(app)
