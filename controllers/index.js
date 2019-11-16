@@ -11,16 +11,16 @@ const validate = (method) => {
     switch (method) {
         case 'sendEmail': {
             return [
-                body('to', 'Invalid to email').exists().isEmail(),
-                body('from', 'Invalid from email').exists().isEmail(),
-                body('subject', 'Invalid subject').exists().isString(),
-                body('body_text', 'Invalid email').exists().isString(),
-                body('body_html', 'Invalid email').exists().isString(),
+                body('to', 'The "to" email address is required, check format, must be an email address').exists().isEmail(),
+                body('from', 'The "from" email address is required, check format, must be an email address').exists().isEmail(),
+                body('subject', 'The to "subject" is required, check format, must be a string').exists().isString(),
+                body('body_text', 'The to "body_text" is required, check format, must be a string').exists().isString(),
+                body('body_html', 'The to "body_html" is required, check format, must include html within a string').exists().isString(),
        ]
         }
         case 'bouncedEmail': {
             return [
-                body('email_address', 'Invalid email address').exists().isEmail()
+                body('email_address', '"email_address"is required, check format, must be an email address').exists().isEmail()
             ]
         }
     }
@@ -29,8 +29,8 @@ const validate = (method) => {
 const sendEmail = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
-        return;
+        return res.status(400).json({ errors: errors.array() });
+        
     }
 
     if (db.get('blacklisted_emails').find({ emailId: req.body.to }).value() !== undefined) {
