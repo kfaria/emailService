@@ -6,7 +6,7 @@ Project: a simple email server
 
 To run on a specific PORT
 ```
-    PORT=#### npm run....
+    PORT=#### npm [command...]
 ```
 
 To run tests
