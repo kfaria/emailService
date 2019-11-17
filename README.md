@@ -5,13 +5,24 @@ Project: a simple email server
 # Running instructions
 
 -- To run on a specific PORT
-    PORT=#### node start
+```
+    PORT=#### npm run....
+```
+
 -- To run tests
+```
     npm test
+```
+
 -- To start in refresh dev mode
+```
     npm run-script start-dev
+```
+
 -- To start
+```
     npm run-script start
+```
 
 Application instructions 
 
