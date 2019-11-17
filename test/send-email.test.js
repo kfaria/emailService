@@ -109,6 +109,6 @@ describe('Blacklist email', () => {
                 body_text: "body text is a string",
                 body_html: "body html wrapped in a string"
             })
-        expect(res.statusCode).toEqual(403)
+        expect(res.statusCode).toEqual(400)
     })
 })

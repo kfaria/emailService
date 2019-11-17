@@ -11,16 +11,27 @@ const validate = (method) => {
     switch (method) {
         case 'sendEmail': {
             return [
-                body('to', 'The "to" email address is required, check format, must be an email address').exists().isEmail(),
+                body('to', 'The "to" email address is required, check format, must be an email address').exists().isEmail().custom(address => {
+                    if (db.get('blacklisted_emails').find({ emailId: address }).value() !== undefined) {
+                        return Promise.reject('email_address is blacklisted, cannot send email');
+                    }
+                    return Promise.resolve()
+                }),
                 body('from', 'The "from" email address is required, check format, must be an email address').exists().isEmail(),
                 body('subject', 'The to "subject" is required, check format, must be a string').exists().isString(),
                 body('body_text', 'The to "body_text" is required, check format, must be a string').exists().isString(),
                 body('body_html', 'The to "body_html" is required, check format, must include html within a string').exists().isString(),
-       ]
+            ]
         }
         case 'bouncedEmail': {
             return [
-                body('email_address', '"email_address"is required, check format, must be an email address').exists().isEmail()
+                body('email_address', '"email_address"is required, check format, must be an email address').exists().isEmail(),
+                body('email_address').custom(address => {
+                    if (db.get('blacklisted_emails').find({ emailId: address }).value() !== undefined) {
+                        return Promise.reject('email_address is already blacklisted');
+                    }
+                    return Promise.resolve()
+                })
             ]
         }
     }
@@ -29,33 +40,19 @@ const validate = (method) => {
 const sendEmail = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-        
+        return res.status(400).json({ errors: errors.array() }) 
     }
-
-    if (db.get('blacklisted_emails').find({ emailId: req.body.to }).value() !== undefined) {
-        return res.status(403).json({message: 'to email address has been blacklisted, cannot send email'})
-    }
-
     return (emailService.sendEmail(req, res))
 }
 
 const bouncedEmail = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
-        return;
-    }
-    if (db.has('blacklisted_emails')) {
-        if (db.get('blacklisted_emails').find({ emailId: req.body.email_address }).value() !== undefined) {
-            return res.status(400).json({ message: 'email address already blacklisted' })
-        } else {
-            db.get('blacklisted_emails').push({ emailId: req.body.email_address }).write()
-        }
-    }
+        return res.status(400).json({ errors: errors.array() });
 
+    }
+     db.get('blacklisted_emails').push({ emailId: req.body.email_address }).write()
     return res.status(200).json({ body: req.body })
-
 }
 
 module.exports = {
