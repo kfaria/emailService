@@ -1,7 +1,7 @@
 Author: Kenneth Faria
-Porject: a simple email server 
+Project: a simple email server 
 
-Running instructions
+#H1 Running instructions
 
 -- To run on a specific PORT
     PORT=#### node start
