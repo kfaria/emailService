@@ -18,7 +18,7 @@ class AwsEmailService extends EmailService {
 
 class SendGridEmailService extends EmailService {
     send(to, from, subject, body_text, body_html) {
-        // instantiate AWS service and send off
+        // instantiate SendGrid service and send off
         return true
     }
 }
