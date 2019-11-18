@@ -3,9 +3,9 @@ const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('database/db.json')
 const db = low(adapter)
-const emailService = require('../server/email_service.js')
+const config = require('../email_config.json');
+let { EmailServiceFactory } = require('./EmailServiceFactory.js')
 
-emailService.startService()
 
 const validate = (method) => {
     switch (method) {
@@ -42,7 +42,18 @@ const sendEmail = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() }) 
     }
-    return (emailService.sendEmail(req, res))
+    
+    let email = EmailServiceFactory.getService({ type: config.service.type, host: config.service.host, port: config.service.port })
+        .send(req.body.to, req.body.from, req.body.subject, req.body.body_text, req.body.body_html)
+
+    if (email) {
+        return res.status(200).json ({ 
+            message: 'sent email',
+            body: req.body })
+    } 
+    return res.status(500).json ({
+        message: 'there was an error'
+    })
 }
 
 const bouncedEmail = async (req, res) => {

@@ -1,6 +1,7 @@
 {
     "service": {
-        "serviceName" : "Amazon SES",
-        "sendEndpoint" : "https://this.is.a.sample.endpoint"
+        "type" : "aws",
+        "host" : "120.0.0.1",
+        "port" : "4000",
     }
 }
