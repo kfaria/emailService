@@ -24,7 +24,6 @@ class SendGridEmailService extends EmailService {
     }
 }
 
-
 class EmailServiceFactory {
     static getService({ type, host, port }) {
         switch (type) {
