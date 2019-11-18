@@ -7,7 +7,6 @@ class EmailService {
     send(to, from, subject, body) {
         throw new Error('Not implemented')
     }
-
 }
 
 class AwsEmailService extends EmailService {
